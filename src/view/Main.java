@@ -1,20 +1,18 @@
 package view;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("inputView.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        Parent root = FXMLLoader.load(getClass().getResource("mainView.fxml"));
+        primaryStage.setTitle("Vumado");
+        primaryStage.setScene(new Scene(root, 600, 200));
 
         primaryStage.show();
     }
