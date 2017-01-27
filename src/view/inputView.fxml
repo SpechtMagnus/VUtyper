@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.geometry.Insets?>
+<VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.112"
+      fx:controller="view.ControllerInputView" spacing="8">
+    <padding>
+        <Insets top="8" bottom="8" left="8" right="8"/>
+    </padding>
+
+    <Label fx:id="questionLabelA" text="Frage A"/>
+    <TextArea fx:id="questionAnswerA"/>
+
+    <Label fx:id="questionLabelB" text="Frage B"/>
+    <TextArea fx:id="questionAnswerB"/>
+
+    <Label fx:id="questionLabelC" text="Frage C"/>
+    <TextArea fx:id="questionAnswerC"/>
+
+    <Label fx:id="questionLabelD" text="Frage D"/>
+    <TextArea fx:id="questionAnswerD"/>
+
+    <Label fx:id="questionLabelE" text="Farage E"/>
+    <TextArea fx:id="questionAnswerE"/>
+
+    <Label fx:id="questionLabelF" text="Frage D"/>
+    <TextArea fx:id="questionAnswerF"/>
+
+    <HBox spacing="16" alignment="CENTER">
+
+        <Button fx:id="prevButton" text="Back" focusTraversable="false"/>
+
+        <Label fx:id="countLabel" text="0/0"/>
+
+        <Button fx:id="nextButton" text="Next"/>
+
+    </HBox>
+</VBox>
