@@ -17,6 +17,13 @@ public class AnswerSet {
     public AnswerSet(int textAnswerCount, int checkAnswerCount) {
         textAnswers = new String[textAnswerCount];
         checkAnswers = new int[checkAnswerCount];
+
+        for(int i = 0; i < textAnswers.length; i++) {
+            textAnswers[i] = "";
+        }
+        for(int i = 0; i < checkAnswers.length; i++) {
+            checkAnswers[i] = NO_CHECKBOX_SELECTED;
+        }
     }
 
     public String getTextAnswer(int index) {
@@ -55,5 +62,15 @@ public class AnswerSet {
 
     public int[] getCheckAnswers() {
         return this.checkAnswers;
+    }
+
+    public boolean isEmpty() {
+        for(int i = 0; i < textAnswers.length; i++) {
+            if(!textAnswers[i].equals("")) return false;
+        }
+        for(int i = 0; i < checkAnswers.length; i++) {
+            if(checkAnswers[i] != NO_CHECKBOX_SELECTED) return false;
+        }
+        return true;
     }
 }

@@ -47,10 +47,17 @@ public class ControllerMainView implements Initializable {
 
         editButton.setOnAction(event -> {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("mainView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("inputView.fxml"));
+                ControllerInputView inputController = new ControllerInputView(loadedQuestionaire);
+                loader.setController(inputController);
+                Parent root = loader.load();
+
                 Stage inputView = new Stage();
                 inputView.setTitle("Vumado");
-                inputView.setScene(new Scene(root, 600, 200));
+                inputView.setOnCloseRequest(closeEvent -> {
+                    inputController.onClose();
+                });
+                inputView.setScene(new Scene(root, 800, 600));
 
                 inputView.show();
             }catch (IOException ex) {
@@ -66,7 +73,10 @@ public class ControllerMainView implements Initializable {
             //Select file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save File");
-            File file = fileChooser.showOpenDialog(null);
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("XML File", "*.xml")
+            );
+            File file = fileChooser.showSaveDialog(null);
 
             if(file != null) {
                 XmlSerializer.writeQuestionaire(file, loadedQuestionaire);
@@ -78,10 +88,15 @@ public class ControllerMainView implements Initializable {
             //Select file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("XML File", "*.xml")
+            );
             File file = fileChooser.showOpenDialog(null);
 
             if(file != null) {
-                XmlSerializer.readQuestionaire(file);
+                this.loadedQuestionaire = XmlSerializer.readQuestionaire(file);
+                lectureName.setText(loadedQuestionaire.getLectureName());
+                profName.setText(loadedQuestionaire.getProfName());
             }
         });
     }
