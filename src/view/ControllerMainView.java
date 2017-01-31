@@ -94,9 +94,10 @@ public class ControllerMainView implements Initializable {
             File file = fileChooser.showOpenDialog(null);
 
             if(file != null) {
-                this.loadedQuestionaire = XmlSerializer.readQuestionaire(file);
+                XmlSerializer.read(file);
+                /*this.loadedQuestionaire = XmlSerializer.readQuestionaire(file);
                 lectureName.setText(loadedQuestionaire.getLectureName());
-                profName.setText(loadedQuestionaire.getProfName());
+                profName.setText(loadedQuestionaire.getProfName());*/
             }
         });
     }

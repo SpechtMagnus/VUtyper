@@ -1,7 +1,12 @@
 package io;
 
 import data.Questionaire;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.*;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
@@ -35,5 +40,37 @@ public class XmlSerializer {
         }
 
         return out;
+    }
+
+    public static void read(File file) {
+        try {
+            DocumentBuilderFactory xmlFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder xmlBuilder = xmlFactory.newDocumentBuilder();
+            Document xmlDoc = xmlBuilder.parse(file);
+            Node currentNode;
+
+            //Normalize something...?
+            xmlDoc.getDocumentElement().normalize();
+            System.out.println(xmlDoc.getDocumentElement().getNodeName());
+
+            //Create questionaire
+            currentNode = xmlDoc.getDocumentElement().getFirstChild().getNextSibling();
+            String lecture = currentNode.getNodeName() + "." + currentNode.getTextContent();
+            currentNode = currentNode.getNextSibling().getNextSibling();
+            String prof = currentNode.getNodeName() + "." + currentNode.getTextContent();
+
+            System.out.println(lecture + " - " + prof);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void write(File file) {
+        try {
+            XMLOutputFactory xmlInFac = XMLOutputFactory.newInstance();
+            //XMLStreamWriter xmlWriter = xmlInFac.createXMLEventWriter(file);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
