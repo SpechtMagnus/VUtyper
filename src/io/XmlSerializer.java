@@ -1,5 +1,6 @@
 package io;
 
+import data.AnswerSet;
 import data.Questionaire;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -7,6 +8,7 @@ import org.w3c.dom.Node;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.*;
+import javax.xml.stream.events.XMLEvent;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
@@ -63,6 +65,60 @@ public class XmlSerializer {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+
+        //1. Veranstaltungsname
+        //2. Prof
+
+        //3. Bogen Schema
+            //Antworttyp
+
+        //4. Antworten
+            //Antwortset
+                //Antwort
+
+        //Init Factory
+        XMLInputFactory factory = XMLInputFactory.newFactory();
+
+        try {
+            XMLEventReader xmlReader = factory.createXMLEventReader(new FileReader(file));
+
+            //Read head
+            xmlReader.nextEvent();
+            xmlReader.nextEvent();
+
+            //Read Name
+
+
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readAnswerSet(XMLEventReader xmlReader, AnswerSet answerSet) throws XMLStreamException {
+        int level = 0;
+        XMLEvent currentEvent;
+
+        while(xmlReader.hasNext() && level >= 0) {
+            currentEvent = xmlReader.nextEvent();
+
+            if(currentEvent.isStartElement()) {
+                level++;
+            } else if(currentEvent.isEndElement()) {
+                level--;
+            }
+
+
+        }
+    }
+
+    public static String readTextAnswer(XMLEventReader xmlReader) {
+        return null;
+    }
+
+    public static int readIntAnswer(XMLEventReader xmlReader) {
+        return 0;
     }
 
     public static void write(File file) {

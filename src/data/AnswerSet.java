@@ -41,9 +41,9 @@ public class AnswerSet {
         textAnswers[index] = answer;
     }
 
-    public void setCheckAnswer(int index, int checkedIndex) {
-        if(index < 0 || index >= checkAnswers.length || checkedIndex < 0) {
-            return;
+    public void setCheckAnswer(int index, int checkedIndex) throws IllegalArgumentException {
+        if(index < 0 || index >= checkAnswers.length) {
+            throw new IllegalArgumentException("The selected checkbox answer does not exist.");
         }
         checkAnswers[index] = checkedIndex;
     }
@@ -72,5 +72,35 @@ public class AnswerSet {
             if(checkAnswers[i] != NO_CHECKBOX_SELECTED) return false;
         }
         return true;
+    }
+
+    public String[] serializeAnswers() {
+        String[] result = new String[textAnswers.length + checkAnswers.length];
+
+        for(int i = 0; i < textAnswers.length; i++) {
+            result[i] = textAnswers[i];
+        }
+
+        for(int j = 0; j < checkAnswers.length; j++) {
+            result[textAnswers.length + j] = String.valueOf(checkAnswers[j]);
+        }
+
+        return result;
+    }
+
+    public void deserializeAnswers(String[] values) throws IllegalArgumentException {
+        try {
+            for(int i = 0; i < textAnswers.length; i++) {
+                setTextAnswer(i, values[i]);
+            }
+
+            for(int j = 0; j < checkAnswers.length; j++) {
+                setCheckAnswer(j, Integer.valueOf(values[textAnswers.length + j]));
+            }
+        } catch (IndexOutOfBoundsException ex) {
+            throw new IllegalArgumentException("The number of deserialized values doesn't match the number of required answers for this type of questionaire.");
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("The number of deserialized values doesn't match the number of required answers for this type of questionaire or some checkbox answers are formatted the wrong way.");
+        }
     }
 }
