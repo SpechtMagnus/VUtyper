@@ -42,6 +42,8 @@
 			this.menuExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.separator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuQuit = new System.Windows.Forms.ToolStripMenuItem();
+			this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -69,9 +71,9 @@
 			this.profLabel.AutoSize = true;
 			this.profLabel.Location = new System.Drawing.Point(12, 64);
 			this.profLabel.Name = "profLabel";
-			this.profLabel.Size = new System.Drawing.Size(51, 13);
+			this.profLabel.Size = new System.Drawing.Size(90, 13);
 			this.profLabel.TabIndex = 101;
-			this.profLabel.Text = "Professor";
+			this.profLabel.Text = "Professor/Dozent";
 			// 
 			// profText
 			// 
@@ -112,7 +114,9 @@
             this.menuOpen,
             this.menuSave,
             this.menuSaveAs,
+            this.toolStripSeparator1,
             this.menuExport,
+            this.einstellungenToolStripMenuItem,
             this.separator1,
             this.menuQuit});
 			this.menuFile.Name = "menuFile";
@@ -166,6 +170,17 @@
 			this.menuQuit.Text = "Beenden";
 			this.menuQuit.Click += new System.EventHandler(this.menuQuit_Click);
 			// 
+			// einstellungenToolStripMenuItem
+			// 
+			this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
+			this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+			this.einstellungenToolStripMenuItem.Text = "Einstellungen";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+			// 
 			// QuestionaireForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -206,6 +221,8 @@
 		private System.Windows.Forms.ToolStripMenuItem menuExport;
 		private System.Windows.Forms.ToolStripSeparator separator1;
 		private System.Windows.Forms.ToolStripMenuItem menuQuit;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem einstellungenToolStripMenuItem;
 	}
 }
 
