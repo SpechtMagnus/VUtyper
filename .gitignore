@@ -324,3 +324,17 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+
+#Tex files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.pdf
