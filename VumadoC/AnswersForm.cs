@@ -19,23 +19,23 @@ namespace VumadoC
 			InitializeComponent();
 			this.loadedQuestionaire = questionaire;
 
-			AnswerBuilder.buildForm(this.answersLayout, this.loadedQuestionaire, structure);
-			this.updateData();
+			AnswerBuilder.BuildForm(this.answersLayout, this.loadedQuestionaire, structure);
+			this.UpdateData();
 		}
 
-		private void nextButton_Click(object sender, EventArgs e)
+		private void NextButton_Click(object sender, EventArgs e)
 		{
 			loadedQuestionaire.Next();
-			updateData();
+			UpdateData();
 		}
 
-		private void prevButton_Click(object sender, EventArgs e)
+		private void PrevButton_Click(object sender, EventArgs e)
 		{
 			loadedQuestionaire.Prev();
-			updateData();
+			UpdateData();
 		}
 
-		private void updateData()
+		private void UpdateData()
 		{
 			this.indexlabel.Text = (this.loadedQuestionaire.CurrentIndex + 1) + "/" + this.loadedQuestionaire.NumberOfAnswers;
 

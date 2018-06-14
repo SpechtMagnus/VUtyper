@@ -151,11 +151,18 @@ namespace VumadoC
 			exporter.addSectionParser(new LatexExporter.SectionParser.TextfieldSectionParser());
 			exporter.addSectionParser(new LatexExporter.SectionParser.ForSectionParser());
 
-			using (var output = new StreamWriter("output.tex"))
+
+			var saveFileDialog = new SaveFileDialog();
+			saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			saveFileDialog.Filter = "LaTex Files (*.tex)|*.tex|All Files (*.*)|*.*";
+			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				exporter.Parse(output, new Export.QuestionaireTreeIterator(this.loadedQuestionaire, this.questionaireStructure));
+				using (var output = new StreamWriter(saveFileDialog.FileName))
+				{
+					exporter.Parse(output, new Export.QuestionaireTreeIterator(this.loadedQuestionaire, this.questionaireStructure));
+				}
+				MessageBox.Show("Done.", "Export successfull.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
-			MessageBox.Show("Done.", "Export successfull.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void menuQuit_Click(object sender, EventArgs e)
