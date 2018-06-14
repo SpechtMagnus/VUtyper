@@ -20,14 +20,16 @@ namespace LatexExporter.SectionParser
 
 			if(token.Contains("%# InputCurrentData #%"))
 			{
-				output.WriteLine(dataEnumerator.Current);
+				if(dataEnumerator.Current != "")
+					output.WriteLine(dataEnumerator.Current);
 			}
 			else if(token.Contains("%# InputNextData #%"))
 			{
 				if (!dataEnumerator.MoveNext())
 					throw new IndexOutOfRangeException("No printable data found");
 
-				output.WriteLine(dataEnumerator.Current);
+				if (dataEnumerator.Current != "")
+					output.WriteLine(dataEnumerator.Current);
 			}
 			else if(token.Contains("%# SkipData #%"))
 			{

@@ -114,8 +114,10 @@ namespace VumadoC
 			var openFileDialog = new OpenFileDialog();
 			openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			openFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+			openFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
 			if (openFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
+				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(openFileDialog.FileName);
 				loadQuestionaire(openFileDialog.FileName);
 			}
 		}
@@ -125,9 +127,10 @@ namespace VumadoC
 			var saveFileDialog = new SaveFileDialog();
 			saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			saveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+			saveFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
 			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				//this.fileName = saveFileDialog.FileName;
+				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(saveFileDialog.FileName);
 				saveQuestionaire(saveFileDialog.FileName);
 				//UnsavedChanges = false;
 			}
@@ -138,8 +141,11 @@ namespace VumadoC
 			var saveFileDialog = new SaveFileDialog();
 			saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			saveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+			saveFileDialog.FileName = this.loadedQuestionaire.Lecture + "-" + this.loadedQuestionaire.Professor + ".xml";
+			saveFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
 			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
+				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(saveFileDialog.FileName);
 				saveQuestionaire(saveFileDialog.FileName);
 			}
 		}
@@ -151,17 +157,18 @@ namespace VumadoC
 			exporter.addSectionParser(new LatexExporter.SectionParser.TextfieldSectionParser());
 			exporter.addSectionParser(new LatexExporter.SectionParser.ForSectionParser());
 
-
 			var saveFileDialog = new SaveFileDialog();
 			saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			saveFileDialog.Filter = "LaTex Files (*.tex)|*.tex|All Files (*.*)|*.*";
+			saveFileDialog.Filter = "LaTeX Files (*.tex)|*.tex|All Files (*.*)|*.*";
+			saveFileDialog.FileName = this.loadedQuestionaire.Lecture + "-" + this.loadedQuestionaire.Professor + ".tex";
+			saveFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
 			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
+				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(saveFileDialog.FileName);
 				using (var output = new StreamWriter(saveFileDialog.FileName))
 				{
 					exporter.Parse(output, new Export.QuestionaireTreeIterator(this.loadedQuestionaire, this.questionaireStructure));
 				}
-				MessageBox.Show("Done.", "Export successfull.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 

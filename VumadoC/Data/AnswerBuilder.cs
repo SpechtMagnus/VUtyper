@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace VumadoC
 {
+	/// <summary>
+	/// Generates the UI for entering the answers to the questionairs
+	/// </summary>
 	public class AnswerBuilder
 	{
 		public static void BuildForm(Control container, Questionaire questionaire, QuestionaireTemplate structure)
@@ -16,29 +19,26 @@ namespace VumadoC
 			if (questionaire.AnswerCount != structure.Count)
 				return;
 
-			var i = structure.Count;
+			var i = 0;
+			var result = new Stack<Control>();
 			foreach (var question in structure)
 			{
-				i--;
+				result.Push(GenerateLabel(question.Text));
 
 				switch (question.Type)
 				{
 					case QuestionaireTemplate.QuestionType.TextQuestion:
-						answerControl = GenerateTextBox(questionaire, i);
-						container.Controls.Add(answerControl);
-						container.Controls.SetChildIndex(answerControl, 0);
+						result.Push(GenerateTextBox(questionaire, i));
 						break;
 					case QuestionaireTemplate.QuestionType.ChoiceQuestion:
-						answerControl = GenerateNumBox(questionaire, i, 0, question.Info);
-						container.Controls.Add(answerControl);
-						container.Controls.SetChildIndex(answerControl, 0);
+						result.Push(GenerateNumBox(questionaire, i, 0, question.Info));
 						break;
 				}
 
-				answerControl = GenerateLabel(question.Text);
-				container.Controls.Add(answerControl);
-				container.Controls.SetChildIndex(answerControl, 1);
+				i++;
 			}
+
+			container.Controls.AddRange(result.ToArray());
 		}
 
 		private static Label GenerateLabel(string name)
@@ -58,10 +58,10 @@ namespace VumadoC
 			{
 				Dock = DockStyle.Top,
 				Multiline = true,
+				ScrollBars = ScrollBars.None,
 				Height = 100,
 				TabIndex = answerIndex,
 				Text = questionaire.Current.getStringValue(answerIndex),
-				ScrollBars = ScrollBars.None
 			};
 
 			box.TextChanged += (Object sender, EventArgs args) =>

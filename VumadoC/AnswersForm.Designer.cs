@@ -78,6 +78,7 @@
 			this.answersLayout.Padding = new System.Windows.Forms.Padding(12);
 			this.answersLayout.Size = new System.Drawing.Size(425, 227);
 			this.answersLayout.TabIndex = 4;
+			this.answersLayout.MouseEnter += new System.EventHandler(this.answersLayout_MouseEnter);
 			// 
 			// AnswersForm
 			// 
