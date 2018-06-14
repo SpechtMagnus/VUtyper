@@ -41,5 +41,10 @@ namespace VumadoC
 
 			this.answersLayout.Controls[this.answersLayout.Controls.Count - 2]?.Focus();
 		}
+
+		private void answersLayout_MouseEnter(object sender, EventArgs e)
+		{
+			answersLayout.Focus();
+		}
 	}
 }

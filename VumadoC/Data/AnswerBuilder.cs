@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace VumadoC
 {
+	/// <summary>
+	/// Generates the UI for entering the answers to the questionairs
+	/// </summary>
 	public class AnswerBuilder
 	{
 		public static void buildForm(Control container, Questionaire questionaire, QuestionaireTemplate structure)
@@ -14,23 +17,26 @@ namespace VumadoC
 			if (questionaire.AnswerCount != structure.Count)
 				return;
 
-			var i = structure.Count;
+			var i = 0;
+			var result = new Stack<Control>();
 			foreach (var question in structure)
 			{
-				i--;
+				result.Push(generateLabel(question.Text));
 
 				switch (question.Type)
 				{
 					case QuestionaireTemplate.QuestionType.TextQuestion:
-						container.Controls.Add(generateTextBox(questionaire, i));
+						result.Push(generateTextBox(questionaire, i));
 						break;
 					case QuestionaireTemplate.QuestionType.ChoiceQuestion:
-						container.Controls.Add(generateNumBox(questionaire, i, 0, question.Info));
+						result.Push(generateNumBox(questionaire, i, 0, question.Info));
 						break;
 				}
 
-				container.Controls.Add(generateLabel(question.Text));
+				i++;
 			}
+
+			container.Controls.AddRange(result.ToArray());
 		}
 
 		private static Label generateLabel(string name)
@@ -49,6 +55,7 @@ namespace VumadoC
 
 			box.Dock = DockStyle.Top;
 			box.Multiline = true;
+			box.ScrollBars = ScrollBars.None;
 			box.Height = 100;
 			box.TabIndex = answerIndex;
 			box.Text = questionaire.Current.getStringValue(answerIndex);

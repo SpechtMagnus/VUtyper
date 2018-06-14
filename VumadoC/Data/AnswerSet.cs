@@ -73,11 +73,16 @@ namespace VumadoC
 			int i = 0;
 			while (reader.Read())
 			{
-				if (reader.IsStartElement() && !reader.IsEmptyElement)
+				if (reader.IsStartElement())
 				{
 					switch (reader.Name)
 					{
 						case "answer":
+							if (reader.IsEmptyElement)
+							{
+								i++;
+								continue;
+							}
 							reader.ReadStartElement();
 							this.answers[i++] = reader.ReadContentAsString();
 							break;
