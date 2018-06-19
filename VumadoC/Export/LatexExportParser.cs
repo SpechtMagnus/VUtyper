@@ -64,9 +64,24 @@ namespace LatexExporter
 
 		public static string escapeLatex(string text)
 		{
-			string[] specialChars = { "&", "%", "\\$", "#", "_", "~", "\\^", "\\\\", "\"", "\'" };
+			// Replace reserved and special chars
+			string[] specialChars = { "&", "%", "\\$", "#", "~", "\\^", "\\\\", "\"", "\'" };
 			Regex rgx = new Regex(@"(" + String.Join("|", specialChars) + @")");
-			return rgx.Replace(text, "\\char`\\$1");
+			text = rgx.Replace(text, "\\char`\\$1");
+
+			//Bold font
+			rgx = new Regex(@"\*\*((\w|\s)+)\*\*");
+			text = rgx.Replace(text, "\\textbf{$1}");
+
+			//Italic font
+			rgx = new Regex(@"__((\w|\s)+)__");
+			text = rgx.Replace(text, "\\textit{$1}");
+
+			//Underline text
+			rgx = new Regex(@"_((\w|\s)+)_");
+			text = rgx.Replace(text, "\\underline{$1}");
+
+			return text;
 		}
 	}
 }
