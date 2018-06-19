@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace VumadoC
@@ -17,64 +9,18 @@ namespace VumadoC
 	{
 		private Questionaire loadedQuestionaire;
 		private QuestionaireTemplate questionaireStructure;
+		private string loadedFile = "";
 
 		public QuestionaireForm()
 		{
 			InitializeComponent();
 
-			/*Teste Fragebogen Schema
-			this.questionaireStructure = new QuestionaireTemplate(new List<QuestionaireTemplate.QuestionTemplate>
-			{
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Die Veröffentlichung der Ergebnisse der Vorlseungsumfrage ist für mich:",
-					Type = QuestionaireTemplate.QuestionType.ChoiceQuestion,
-					Info = 6
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Wenn der Dozent diesen handschriftlichen Bogen zu sehen bekäme, fände ich das:",
-					Type = QuestionaireTemplate.QuestionType.ChoiceQuestion,
-					Info = 6
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Bemerkungen zum Schein (falls vorhanden):",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Folgende Dinge haben die Tutoren gut/schlecht gemacht:",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Weitere Bemerungen zu den Übungen",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Weitere Bemerkungen zu den Materialien (Skript, folien, Literatur, etc.):",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Ich habe konkrete Wünsche zur Veranstaltung:",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				},
-				new QuestionaireTemplate.QuestionTemplate()
-				{
-					Text = "Folgende Vorkenntnisse haben mir gefehlt:",
-					Type = QuestionaireTemplate.QuestionType.TextQuestion
-				}
-			});
-			var writer = new StreamWriter("defaultQuestionaire.xml");
-			new XmlSerializer(typeof(QuestionaireTemplate)).Serialize(writer, this.questionaireStructure);
-			writer.Close();*/
-
 			try
 			{
-				var reader = new StreamReader("defaultQuestionaire.xml");
+				var defaultQuestionairePath = Path.Combine(
+					Path.GetDirectoryName(Application.), "defaultQuestionaire.xml"
+				);
+				var reader = new StreamReader(defaultQuestionairePath);
 				this.questionaireStructure = (QuestionaireTemplate)new XmlSerializer(typeof(QuestionaireTemplate)).Deserialize(reader);
 				reader.Close();
 			}
@@ -118,22 +64,28 @@ namespace VumadoC
 			if (openFileDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(openFileDialog.FileName);
+				this.loadedFile = openFileDialog.FileName;
 				loadQuestionaire(openFileDialog.FileName);
 			}
 		}
 
 		private void menuSave_Click(object sender, EventArgs e)
 		{
-			var saveFileDialog = new SaveFileDialog();
-			saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			saveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
-			saveFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
-			if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+			if(this.loadedFile == "")
 			{
-				Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(saveFileDialog.FileName);
-				saveQuestionaire(saveFileDialog.FileName);
-				//UnsavedChanges = false;
+				var saveFileDialog = new SaveFileDialog();
+				saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				saveFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+				saveFileDialog.InitialDirectory = Properties.Settings.Default.WorkingDirectory;
+				if (saveFileDialog.ShowDialog(this) != DialogResult.OK)
+				{
+					return;
+				}
+				this.loadedFile = saveFileDialog.FileName;
 			}
+			Properties.Settings.Default.WorkingDirectory = Path.GetDirectoryName(this.loadedFile);
+			saveQuestionaire(this.loadedFile);
+			//UnsavedChanges = false;
 		}
 
 		private void menuSaveAs_Click(object sender, EventArgs e)

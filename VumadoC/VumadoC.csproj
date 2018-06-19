@@ -26,7 +26,7 @@
     <TargetCulture>en</TargetCulture>
     <ProductName>VumadoC</ProductName>
     <PublisherName>Magnus Specht</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -112,6 +112,9 @@
     <EmbeddedResource Include="AnswersForm.resx">
       <DependentUpon>AnswersForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="defaultQuestionaire.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="QuestionaireForm.resx">
       <DependentUpon>QuestionaireForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -142,15 +145,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="defaultQuestionaire.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 und x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
