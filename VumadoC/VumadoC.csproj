@@ -86,7 +86,6 @@
     <Compile Include="Data\AnswerBuilder.cs" />
     <Compile Include="Data\AnswerSet.cs" />
     <Compile Include="Data\AnswerType.cs" />
-    <Compile Include="Data\LatexExporter.cs" />
     <Compile Include="Data\Questionaire.cs" />
     <Compile Include="Data\QuestionaireTemplate.cs" />
     <Compile Include="Export\ILatexSectionParser.cs" />

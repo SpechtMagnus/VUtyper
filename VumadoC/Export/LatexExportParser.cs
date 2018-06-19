@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace LatexExporter
 {
@@ -59,6 +60,13 @@ namespace LatexExporter
 			if (lineNumber < 0 || lineNumber >= this.lines.Count)
 				return null;
 			return this.lines[lineNumber];
+		}
+
+		public static string escapeLatex(string text)
+		{
+			string[] specialChars = { "&", "%", "\\$", "#", "_", "~", "\\^", "\\\\", "\"", "\'" };
+			Regex rgx = new Regex(@"(" + String.Join("|", specialChars) + @")");
+			return rgx.Replace(text, "\\char`\\$1");
 		}
 	}
 }

@@ -36,7 +36,8 @@ namespace VumadoC.Export
 
 		public string Current
 		{
-			get {
+			get
+			{
 				if (depth == 0 && qIndex == 0)
 				{
 					return data.Lecture;
@@ -67,7 +68,7 @@ namespace VumadoC.Export
 
 		public void Dispose()
 		{
-			
+
 		}
 
 		public ITreeEnumerator<string> MoveIn()
@@ -86,15 +87,23 @@ namespace VumadoC.Export
 				qIndex++;
 			else if (depth == 1)
 			{
-				qIndex++;
-				if (qIndex >= structure.Count)
-					return false;
+				do
+				{
+					qIndex++;
+					if (qIndex >= structure.Count)
+						return false;
+				}
+				while (!structure[qIndex].AllowPrint);
 			}
 			else if (depth == 2)
 			{
-				aIndex++;
-				if (data.Get(aIndex) == null)
-					return false;
+				do
+				{
+					aIndex++;
+					if (data.Get(aIndex) == null)
+						return false;
+				}
+				while (data.Get(aIndex).getStringValue(qIndex) == null);
 			}
 			else
 				return false;

@@ -89,6 +89,7 @@ namespace VumadoC
 			public string Text { get; set; }
 			public QuestionType Type { get; set; }
 			public int Info { get; set; }
+			public bool AllowPrint { get; set; }
 		}
 	}
 }
